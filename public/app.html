@@ -1,0 +1,52 @@
+<!DOCTYPE html> <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href='styles.css'/>
+    <script src='script.js'></script>
+</head>
+<body>
+    <div class='app-split'>
+        <div id="inputBox">
+            <form action="" method="post">
+                <div class="inputField">
+                    <label for="patID">
+                        Patient ID:
+                        <input type="text" name="patID" id="patID-input">
+                    </label>
+                </div>
+                <div class="inputField">
+                    <label for="tracers">
+                        Tracer:
+                        <select name="tracers" id="tracer-choice">
+                            <option value="FEOVB">FEOVB</option>
+                            <option value="DTBZ">DTBZ</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="inputField">
+                    <label for="dose">
+                        Dose:
+                        <input type="text" name="dose" id="dose-input">
+                    </label>
+                </div>
+                <div class='inputField'>
+                   <input type="button" value="Add Visit" id='add-visit'>
+                </div>
+            </form>
+            <script>
+                registerButton();
+                var visits = [];
+            </script>
+        </div>
+        <div id="outputTableBox">
+            <table id='outputTable'></table>
+            <script>
+                var table = document.getElementById('outputTable')
+            </script>
+        </div>
+    </div>
+</body>
+</html>
