@@ -1,50 +1,69 @@
 /* eslint-disable no-unused-vars */
 
-function getVisitInfo() {
+function initCounter() {
     return {
-        patID: document.getElementById('patID-input').value,
-        doseInput: document.getElementById('dose-input').value,
-        tracerChoice: document.getElementById('tracer-choice').value
+        FEOVB: 0,
+        DTBZ: 0,
+        PE2I: 0,
+        FMZ: 0,
+        ASEM: 0
+    };
+}
+
+function clearTable(table) {
+    Object.values(table.children).forEach(child => table.removeChild(child))
+}
+
+function createRow(tracer, visits) {
+    let tracerRow = document.createElement('tr')
+    let tracerLabel = document.createElement('td')
+    tracerLabel.textContent = tracer
+    let tracerVisits = document.createElement('td')
+    tracerVisits.textContent = visits
+    tracerRow.appendChild(tracerLabel)
+    tracerRow.appendChild(tracerVisits)
+    return tracerRow
+}
+
+function renderTable() {
+    let visitTable = document.getElementById('output-table')
+    clearTable(visitTable)
+    Object.entries(visitCount).forEach(([tracer,visits]) => {
+        let tracerRow = createRow(tracer, visits)
+        visitTable.appendChild(tracerRow)
+    })
+}
+
+function addVisit() {
+    let tracerChoice = document.getElementById('tracer-select')
+    visitCount[tracerChoice.value] += 1
+    renderTable()
+}
+
+function subtractVisit() {
+    let tracerChoice = document.getElementById('tracer-select')
+    if (visitCount[tracerChoice.value] > 0) {
+        visitCount[tracerChoice.value] -= 1
+        renderTable()
     }
 }
 
-function clearVisitInfo() {
-    document.getElementById('patID-input').value = ""
-    document.getElementById('dose-input').value = ""
-    document.getElementById('tracer-choice').value = ""
-
+function resetVisits() {
+    visitCount = initCounter();
+    renderTable()
 }
 
-function createCell(value) {
-    let cell = document.createElement('td')
-    cell.textContent = value
-    return(cell)
+function submitVisits() {
+    fetch('/api/tracers', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        body: JSON.stringify(visitCount)
+    }).then(response => {
+        if (response.redirected) {
+            window.location.href = response.url;
+        }
+    }).catch(e => console.error(e))
 }
-
-function createRow(cells) {
-    let row = document.createElement('tr')
-    for (cell of cells) {
-        row.appendChild(cell)
-    }
-    return(row)
-}
-
-function updateTable(newVisit) {
-    let newRow = createRow([
-        createCell(newVisit.patID),
-        createCell(newVisit.tracerChoice),
-        createCell(newVisit.doseInput)
-    ])
-    table.appendChild(newRow)
-}
-
-function registerButton() {
-    const button = document.getElementById("add-visit");
-    button.addEventListener('click', () => {
-        let visitInfo = getVisitInfo()
-        clearVisitInfo()
-        visits.push(visitInfo)
-        updateTable(visitInfo)
-    });
-}
-

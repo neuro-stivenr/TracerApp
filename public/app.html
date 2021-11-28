@@ -9,44 +9,34 @@
 </head>
 <body>
     <div class='app-split'>
-        <div id="inputBox">
-            <form action="" method="post">
-                <div class="inputField">
-                    <label for="patID">
-                        Patient ID:
-                        <input type="text" name="patID" id="patID-input">
-                    </label>
-                </div>
-                <div class="inputField">
-                    <label for="tracers">
-                        Tracer:
-                        <select name="tracers" id="tracer-choice">
-                            <option value="FEOVB">FEOVB</option>
-                            <option value="DTBZ">DTBZ</option>
-                        </select>
-                    </label>
-                </div>
-                <div class="inputField">
-                    <label for="dose">
-                        Dose:
-                        <input type="text" name="dose" id="dose-input">
-                    </label>
-                </div>
-                <div class='inputField'>
-                   <input type="button" value="Add Visit" id='add-visit'>
-                </div>
-            </form>
-            <script>
-                registerButton();
-                var visits = [];
-            </script>
+
+        <div class='half-container' id='input-half'>
+
+            <label for="tracer">Tracer: </label>
+            <select name="tracer" id="tracer-select">
+                <option value="FEOVB">FEOVB</option>
+                <option value="DTBZ">DTBZ</option>
+                <option value="PE2I">PE2I</option>
+                <option value="FMZ">FMZ</option>
+                <option value="ASEM">ASEM</option>
+            </select>
+
+            <button onclick="addVisit()">Add</button>
+            <button onclick="subtractVisit()">Subtract</button>
+            <button onclick="resetVisits()">Reset</button>
+
         </div>
-        <div id="outputTableBox">
-            <table id='outputTable'></table>
-            <script>
-                var table = document.getElementById('outputTable')
-            </script>
+
+        <div class='half-container' id='output-half'>
+
+            <table id='output-table'></table>
+            <button onclick="submitVisits()">Submit</button>
+
         </div>
     </div>
+    <script>
+        var visitCount = initCounter();
+        renderTable();
+    </script>
 </body>
 </html>
