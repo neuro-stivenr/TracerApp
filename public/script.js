@@ -26,7 +26,7 @@ function createRow(tracer, visits) {
 }
 
 function renderTable() {
-    let visitTable = document.getElementById('output-table')
+    let visitTable = document.getElementById('input-table')
     clearTable(visitTable)
     Object.entries(visitCount).forEach(([tracer,visits]) => {
         let tracerRow = createRow(tracer, visits)
@@ -51,6 +51,7 @@ function subtractVisit() {
 function resetVisits() {
     visitCount = initCounter();
     renderTable()
+    document.querySelector('#output-table-div').innerHTML = ""
 }
 
 function submitVisits() {
@@ -62,8 +63,8 @@ function submitVisits() {
         redirect: 'follow',
         body: JSON.stringify(visitCount)
     }).then(response => {
-        if (response.redirected) {
-            window.location.href = response.url;
-        }
+        response.text().then(html => {
+            document.querySelector('#output-table-div').innerHTML = html
+        })
     }).catch(e => console.error(e))
 }

@@ -25,15 +25,19 @@
             <button onclick="subtractVisit()">Subtract</button>
             <button onclick="resetVisits()">Reset</button>
 
-        </div>
+            <div id='table-divs'>
+                <div id='input-table-div'>
+                    <table id='input-table'></table>
+                </div>
+                <div id='output-table-div'></div>
+            </div>
 
-        <div class='half-container' id='output-half'>
-
-            <table id='output-table'></table>
             <button onclick="submitVisits()">Submit</button>
 
         </div>
+
     </div>
+    
     <script>
         var visitCount = initCounter();
         renderTable();
