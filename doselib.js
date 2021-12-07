@@ -1,11 +1,19 @@
-const doseinfo = require('./doseinfo.json');
-const doselimit = require('./doselimit.json');
-const organs = Object.keys(doselimit)
+const tableify = require('tableify');
+
+const organs = Object.keys(require('./doselimit.json'))
 
 const example_input = { FEOVB: 5, DTBZ: 0, PE2I: 1, FMZ: 2, ASEM: 0 };
-const do_debug = true;
+const do_debug = false;
 
-function calc_exposure(input) {
+const tableify_options = {
+    headers: [
+        'organ',
+        'exposure',
+        'limit'
+    ]
+}
+
+function calc_exposure(input, doseinfo) {
     let exposures = Array(organs.length).fill(0)
     Object.entries(input).map(([tracer, visits]) => {
         do_debug && console.debug(`\n--- Calculating exposure for ${tracer} ---`)
@@ -20,4 +28,16 @@ function calc_exposure(input) {
     )
 }
 
+function tabulate_exposure(pt_exposure, doselimit) {
+    items = Object.keys(pt_exposure).map(organ => {
+        return {
+            organ: organ,
+            exposure: pt_exposure[organ].toFixed(3),
+            limit: doselimit[organ]
+        }
+    })
+    return tableify(items, tableify_options)
+}
+
 exports.calc_exposure = calc_exposure;
+exports.tabulate_exposure = tabulate_exposure;

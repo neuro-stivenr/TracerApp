@@ -65,6 +65,11 @@ function submitVisits() {
     }).then(response => {
         response.text().then(html => {
             document.querySelector('#output-table-div').innerHTML = html
+            document.querySelector('#output-table-div > table > tbody').childNodes.forEach((row,i) => {
+                if (parseFloat(row.childNodes[1].textContent) > parseFloat(row.childNodes[2].textContent)) {
+                    row.className = "red-text"
+                }
+            })
         })
     }).catch(e => console.error(e))
 }
