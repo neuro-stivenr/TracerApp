@@ -1,10 +1,14 @@
+const fs = require('fs');
+const https = require('https')
 const express = require('express');
+const tableify = require('tableify')
+
 const app = express();
-const PORT = 5656;
+
 const doselib = require('./doselib');
 const doselimit = require('./doselimit.json')
 const doseinfo = require('./doseinfo.json')
-const tableify = require('tableify')
+const config = require('./config.json')
 
 app.use(express.static('public'));
 app.use(express.json());
@@ -22,4 +26,17 @@ app.post('/api/tracers', (req, res) => {
     res.send(htmltable)
 })
 
-app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
+if (config.do_ssl) {
+    (fs.existsSync('./key.pem') && fs.existsSync('./cert.pem')) || 
+        console.error('ERROR: Either set do_ssl to false or run `make ssl` in terminal.\n')
+    const sslkey = fs.readFileSync('./key.pem')
+    const sslcert = fs.readFileSync('./cert.pem')
+    https.createServer({
+        key: sslkey,
+        cert: sslcert,
+        passphrase: process.env.TRACER_APP_PASS
+    }, app).listen(config.PORT, () => console.log(`Listening on port: ${config.PORT}`));
+} else {
+    app.listen(config.PORT, () => console.log(`Listening on port: ${config.PORT}`))
+}
+
