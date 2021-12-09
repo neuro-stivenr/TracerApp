@@ -18,3 +18,6 @@ npm start
 
 Then, open your browser to:
 http://localhost:5656
+
+Alternatively, try out the live version of this app at:
+https://tracerapp.xyz

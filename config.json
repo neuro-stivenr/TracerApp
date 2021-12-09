@@ -1,4 +1,5 @@
 {
-    "do_ssl": true,
-    "PORT": 5656
+    "do_ssl": false,
+    "PORT": 5656,
+    "verbose": true
 }
