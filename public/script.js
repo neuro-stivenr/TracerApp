@@ -6,7 +6,8 @@ function initCounter() {
         DTBZ: 0,
         PE2I: 0,
         FMZ: 0,
-        ASEM: 0
+        ASEM: 0,
+	AV1451: 0
     };
 }
 
