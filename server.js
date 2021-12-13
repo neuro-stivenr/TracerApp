@@ -14,8 +14,8 @@ app.use(express.static('public'));
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    console.log(`\nGET on / by ${req.ip} -> redirecting to /app.html`)
-    res.redirect('/app.html')
+    console.log(`\nGET on / by ${req.ip} -> redirecting to /index.html`)
+    res.redirect('/index.html')
 });
 
 app.post('/api/tracers', (req, res) => {

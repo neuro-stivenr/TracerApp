@@ -7,7 +7,7 @@ function initCounter() {
         PE2I: 0,
         FMZ: 0,
         ASEM: 0,
-	AV1451: 0
+	      AV1451: 0
     };
 }
 
@@ -26,13 +26,30 @@ function createRow(tracer, visits) {
     return tracerRow
 }
 
+function createHeader(col1, col2) {
+    let headerSection = document.createElement('thead')
+    let headerRow = document.createElement('tr')
+    let headerCol1 = document.createElement('th')
+    headerCol1.textContent = col1
+    let headerCol2 = document.createElement('th')
+    headerCol2.textContent = col2
+    headerRow.appendChild(headerCol1)
+    headerRow.appendChild(headerCol2)
+    headerSection.appendChild(headerRow)
+    return headerSection
+}
+
 function renderTable() {
     let visitTable = document.getElementById('input-table')
-    clearTable(visitTable)
+    let headerSection = createHeader("tracer", "visits")
+    let bodySection = document.createElement('tbody')
     Object.entries(visitCount).forEach(([tracer,visits]) => {
         let tracerRow = createRow(tracer, visits)
-        visitTable.appendChild(tracerRow)
+        bodySection.appendChild(tracerRow)
     })
+    clearTable(visitTable)
+    visitTable.append(headerSection)
+    visitTable.append(bodySection)
 }
 
 function addVisit() {
