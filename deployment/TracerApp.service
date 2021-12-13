@@ -1,0 +1,11 @@
+[Unit]
+Description=TracerApp NodeJS server.
+
+[Service]
+Type=simple
+StandardOutput=journal
+WorkingDirectory=/home/tracerapp/TracerApp
+ExecStart=/usr/bin/npm start
+
+[Install]
+WantedBy=default.target
